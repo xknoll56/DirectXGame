@@ -132,6 +132,7 @@
     <ClCompile Include="ObjLoading.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Drawable.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ObjLoading.h" />
     <ClInclude Include="Renderer.h" />

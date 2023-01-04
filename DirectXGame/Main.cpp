@@ -26,11 +26,13 @@ struct Camera
     float cameraPitch = 0.f;
     float cameraYaw = 0.f;
     Matrix4 perspectiveMat = {};
+    Matrix4 view = {};
 };
 
 Camera camera;
 #include "Scene.h"
 #include "Renderer.h"
+#include "Drawable.h"
 
 static bool global_windowDidResize = false;
 

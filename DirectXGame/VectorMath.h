@@ -104,6 +104,15 @@ inline Matrix4 scaleMat(float s) {
     };
 }
 
+inline Matrix4 scaleMat(Vector3 s) {
+    return {
+        s.x, 0, 0, 0,
+        0, s.y, 0, 0,
+        0, 0, s.z, 0,
+        0, 0, 0, 1
+    };
+}
+
 inline Matrix4 rotateXMat(float rad) {
     float sinTheta = sinf(rad);
     float cosTheta = cosf(rad);
@@ -122,6 +131,17 @@ inline Matrix4 rotateYMat(float rad) {
         cosTheta, 0, sinTheta, 0,
         0, 1, 0, 0,
         -sinTheta, 0, cosTheta, 0,
+        0, 0, 0, 1
+    };
+}
+
+inline Matrix4 rotateZMat(float rad) {
+    float sinTheta = sinf(rad);
+    float cosTheta = cosf(rad);
+    return {
+        cosTheta, -sinTheta, 0, 0,
+        sinTheta, cosTheta, 0, 0,
+        0, 0, 1, 0,
         0, 0, 0, 1
     };
 }
