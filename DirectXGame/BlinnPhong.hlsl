@@ -4,6 +4,7 @@ cbuffer vsConstants : register(b0)
     float4x4 modelViewProj;
     float4x4 modelView;
     float3x3 normalMatrix;
+    float4 color;
 };
 
 struct DirectionalLight
@@ -23,9 +24,6 @@ cbuffer fsConstants : register(b0)
 {
     DirectionalLight dirLight;
     PointLight pointLights[2];
-    float4 objectColor;
-    bool useColor;
-    float3 padding;
 };
 
 struct VS_Input {
@@ -39,6 +37,7 @@ struct VS_Output {
     float3 posEye : POSITION;
     float3 normalEye : NORMAL;
     float2 uv : TEXCOORD;
+    float4 color : COLOR;
     //Vector3 normal : NORMAL;
 };
 
@@ -51,6 +50,7 @@ VS_Output vs_main(VS_Input input)
     output.pos = mul(float4(input.pos, 1.0f), modelViewProj);
     output.posEye = mul(float4(input.pos, 1.0f), modelView).xyz;
     output.normalEye = normalize(mul(input.norm, normalMatrix));
+    output.color = color;
     //output.normalEye = normalize(input.norm);
     //output.normal = input.norm;
     output.uv = input.uv;
@@ -60,7 +60,7 @@ VS_Output vs_main(VS_Input input)
 float4 ps_main(VS_Output input) : SV_Target
 {
     //Vector3 diffuseColor = mytexture.Sample(mysampler, input.uv).xyz + objectColor.xyz;
-    float3 diffuseColor = mytexture.Sample(mysampler, input.uv).xyz + objectColor.xyz;
+    float3 diffuseColor = mytexture.Sample(mysampler, input.uv).xyz + input.color;
 
     float3 fragToCamDir = normalize(-input.posEye);
 

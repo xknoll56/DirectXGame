@@ -25,9 +25,7 @@ struct BlinnPhongPSConstants
 {
     DirectionalLight dirLight;
     PointLight pointLights[2];
-    Vector4 objectColor;
-    bool useColor;
-    Vector3 padding;
+
 };
 
 // Create Constant Buffer for our Blinn-Phong vertex shader
@@ -36,4 +34,5 @@ struct BlinnPhongVSConstants
     Matrix4 modelViewProj;
     Matrix4 modelView;
     Vector3x3 normalMatrix;
+    Vector4 color;
 };

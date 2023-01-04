@@ -23,19 +23,15 @@ protected:
 	Shader* lightShader;
 	Shader* blinnPhongShader;
 
-	BlinnPhongPSConstants psConstants;
-	BlinnPhongVSConstants psConstants;
 
 public:
 
 	virtual void updateLights(Shader* shader, Vector4 dirLight, Vector4 color)
 	{
-		
-		psConstants.dirLight.dirEye = normalise(Vector4{ 1.f, 0.f, 0.f, 0.f });
-		psConstants.dirLight.color = { 1.0f, 1.0f, 1.0f, 1.f };
-		psConstants.objectColor = { 0.7f, 0.7f, 0.7f , 1.0f };
-		psConstants.useColor = true;
-		blinnPhongShader->SetPixelShaderUniformBuffer("pbPixelConstants", psConstants);
+		BlinnPhongPSConstants blinnPhongFSConstants;
+		blinnPhongFSConstants.dirLight.dirEye = normalise(Vector4{ 1.f, 0.f, 0.f, 0.f });
+		blinnPhongFSConstants.dirLight.color = { 1.0f, 1.0f, 1.0f, 1.f };
+		blinnPhongShader->SetPixelShaderUniformBuffer("pbPixelConstants", blinnPhongFSConstants);
 	}
 	virtual void init()
 	{
@@ -136,10 +132,10 @@ public:
 	VertexBuffer* vertexBuffer;
 	IndexBuffer* indexBuffer;
 	BlinnPhongVSConstants blinnPhongVSConstants;
-	BlinnPhongPSConstants blinnPhongFSConstants;
 	Vector3 position;
 	Vector3 eulerRotation;
 	Vector3 scale; 
+	Vector4 color;
 	Matrix4 model;
 
 	Drawable()
@@ -147,7 +143,7 @@ public:
 		position = { 0,0,0 };
 		scale = { 1, 1, 1 };
 		eulerRotation = { 0,0,0 };
-
+		color = { 1,1,1, 1};
 		setModel();
 	}
 
@@ -174,6 +170,7 @@ public:
 		blinnPhongVSConstants.modelView = model * camera.view;
 		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
 		blinnPhongVSConstants.normalMatrix = Matrix4ToVector3x3(model);
+		blinnPhongVSConstants.color = color;
 
 		shader->Bind();
 		shader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
@@ -237,6 +234,7 @@ public:
 			Drawable drawable;
 			drawable.position = { 3, 0, 0 };
 			drawable.scale = { 2, 2, 2 };
+			drawable.color = { 1,1,0,1 };
 			drawable.eulerRotation = { 0, (float)currentTimeInSeconds , 0.0f };
 			drawable.setModel();
 			drawable.vertexBuffer = sphereVertexBuffer;
