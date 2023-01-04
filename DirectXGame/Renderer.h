@@ -256,7 +256,7 @@ public:
     {
 
         setStates();
-        d3d11DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        
         demoScene.update(dt);
         d3d11SwapChain->Present(1, 0);
     }

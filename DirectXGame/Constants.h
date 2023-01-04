@@ -3,21 +3,21 @@
 
 struct DirectionalLight
 {
-    float4 dirEye; //NOTE: Direction towards the light
-    float4 color;
+    Vector4 dirEye; //NOTE: Direction towards the light
+    Vector4 color;
 };
 
 struct PointLight
 {
-    float4 posEye;
-    float4 color;
+    Vector4 posEye;
+    Vector4 color;
 };
 
 // Create Constant Buffer for our light vertex shader
 struct LightVSConstants
 {
-    float4x4 modelViewProj;
-    float4 color;
+    Matrix4 modelViewProj;
+    Vector4 color;
 };
 
 // Create Constant Buffer for our Blinn-Phong pixel shader
@@ -25,15 +25,15 @@ struct BlinnPhongPSConstants
 {
     DirectionalLight dirLight;
     PointLight pointLights[2];
-    float4 objectColor;
+    Vector4 objectColor;
     bool useColor;
-    float3 padding;
+    Vector3 padding;
 };
 
 // Create Constant Buffer for our Blinn-Phong vertex shader
 struct BlinnPhongVSConstants
 {
-    float4x4 modelViewProj;
-    float4x4 modelView;
-    float3x3 normalMatrix;
+    Matrix4 modelViewProj;
+    Matrix4 modelView;
+    Vector3x3 normalMatrix;
 };

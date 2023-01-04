@@ -21,11 +21,11 @@
 #include "VertexBuffer.h"
 struct Camera
 {
-    float3 cameraPos = { 0, 0, 2 };
-    float3 cameraFwd = { 0, 0, -1 };
+    Vector3 cameraPos = { 0, 0, 2 };
+    Vector3 cameraFwd = { 0, 0, -1 };
     float cameraPitch = 0.f;
     float cameraYaw = 0.f;
-    float4x4 perspectiveMat = {};
+    Matrix4 perspectiveMat = {};
 };
 
 Camera camera;
@@ -46,27 +46,6 @@ ID3D11Device1* d3d11Device;
 ID3D11DeviceContext1* d3d11DeviceContext;
 ID3D11ShaderResourceView* textureView;
 ID3D11SamplerState* samplerState;
-
-
-
-// Input
-enum GameAction {
-    GameActionMoveCamFwd,
-    GameActionMoveCamBack,
-    GameActionMoveCamLeft,
-    GameActionMoveCamRight,
-    GameActionTurnCamLeft,
-    GameActionTurnCamRight,
-    GameActionLookUp,
-    GameActionLookDown,
-    GameActionRaiseCam,
-    GameActionLowerCam,
-    GameActionCount
-};
-
-
-
-
 
 
 bool win32CreateD3D11RenderTargets(ID3D11Device1* d3d11Device, IDXGISwapChain1* swapChain, ID3D11RenderTargetView** d3d11FrameBufferView, ID3D11DepthStencilView** depthBufferView)

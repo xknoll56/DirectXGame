@@ -1,12 +1,11 @@
 ﻿  Constants.h
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(214,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Main.cpp
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp(3,1): warning C4005: 'UNICODE': macro redefinition
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp(3,1): message : 'UNICODE' previously declared on the command line
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(214,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(92,1): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(105,1): warning C4305: '-=': truncation from 'double' to 'float'
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(107,1): warning C4305: '+=': truncation from 'double' to 'float'
-  ObjLoading.cpp
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(317,42): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(318,40): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
   Generating Code...
   DirectXGame.vcxproj -> C:\Users\Xavier\Documents\GitHub\DirectXGame\x64\Debug\DirectXGame.exe

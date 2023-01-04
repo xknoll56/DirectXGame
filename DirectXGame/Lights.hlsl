@@ -1,7 +1,7 @@
 
 cbuffer constants : register(b0)
 {
-    float4x4 modelViewProj;
+    float4 modelViewProj;
     float4 color;
 };
 
