@@ -67,7 +67,7 @@ float4 ps_main(VS_Output input) : SV_Target
     // Directional Light
     float3 dirLightIntensity;
     {
-        float ambientStrength = 0.1f;
+        float ambientStrength = 0.3f;
         float specularStrength = 0.6;
         float specularExponent = 100;
         float3 lightDirEye = dirLight.dirEye.xyz;
