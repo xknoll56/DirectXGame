@@ -24,6 +24,8 @@ public:
 	Matrix4 model;
 	DrawableType topologyType;
 
+	Drawable* childDrawable = nullptr;
+
 	Drawable()
 	{
 		position = { 0,0,0 };
@@ -56,11 +58,12 @@ public:
 		this->scale = scale;
 		this->eulerRotation = eulerRotation;
 		setModel();
-		draw(shader);
+		//draw(shader);
 	}
-	void draw(Shader* shader)
+	void draw(Shader* shader, Matrix4 parentModel)
 	{
 		setModel();
+		model =   model * parentModel;
 		blinnPhongVSConstants.modelView = model * camera.view;
 		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
 		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
@@ -81,8 +84,6 @@ public:
 			d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
 			break;
 		}
-
-
 		vertexBuffer->Bind();
 
 		if (indexBuffer != nullptr)
@@ -94,6 +95,9 @@ public:
 		{
 			d3d11DeviceContext->Draw(vertexBuffer->NumVerts(), 0);
 		}
+		if (childDrawable != nullptr)
+			childDrawable->draw(shader, model);
+
 	}
 };
 
@@ -114,6 +118,8 @@ protected:
 
 	VertexBuffer* boundingBoxVertexBuffer;
 
+	VertexBuffer* boundingPlaneVertexBuffer;
+
 	Shader* lightShader;
 	Shader* blinnPhongShader;
 
@@ -123,10 +129,11 @@ public:
 	virtual void updateLights(Shader* shader, Vector4 dirLight, Vector4 color)
 	{
 		BlinnPhongPSConstants blinnPhongFSConstants;
-		blinnPhongFSConstants.dirLight.dirEye = VectorNormalize(Vector4{ 1.f, 0.f, 0.f, 0.f });
+		blinnPhongFSConstants.dirLight.dirEye = VectorNormalize(Vector4{ 1.f, 1.f, 1.f, 0.f });
 		blinnPhongFSConstants.dirLight.color = { 1.0f, 1.0f, 1.0f, 1.f };
 		blinnPhongShader->SetPixelShaderUniformBuffer("pbPixelConstants", blinnPhongFSConstants);
 	}
+
 	virtual void init()
 	{
 		LoadedObj obj = loadObj("cube.obj");
@@ -151,6 +158,9 @@ public:
 
 		boundingBoxVertexBuffer = new VertexBuffer(boundingBoxVerts, 24, 3 * sizeof(float), 0, false);
 
+		boundingPlaneVertexBuffer = new VertexBuffer(boundingPlaneVerts, 8, 3 * sizeof(float), 0, false);
+
+
 
 		lightShader = new Shader(L"Lights.hlsl", ShaderInputType::POSITION);
 
@@ -170,6 +180,7 @@ public:
 		cbp.second = blinnPhongPSConstantBuffer;
 		blinnPhongShader->uniformBuffers.insert(cbp);
 	}
+
 	virtual void update(float dt) = 0;
 
 	void drawBox(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
@@ -194,6 +205,50 @@ public:
 
 	}
 
+	void drawSphere(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
+	{
+		Matrix4 translation = MatrixTranslate(position);
+		Matrix4 rotation = MatrixXRotation(eulerAngles.x) * MatrixYRotation(eulerAngles.y) * MatrixZRotation(eulerAngles.z);
+		Matrix4 scaleM = MatrixScale(scale);
+
+		Matrix4 model = scaleM * rotation * translation;
+		BlinnPhongVSConstants blinnPhongVSConstants;
+		blinnPhongVSConstants.modelView = model * camera.view;
+		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
+		blinnPhongVSConstants.color = color;
+
+		blinnPhongShader->Bind();
+		blinnPhongShader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		sphereVertexBuffer->Bind();
+		sphereIndexBuffer->Bind();
+		d3d11DeviceContext->DrawIndexed(sphereIndexBuffer->NumIndices(), 0, 0);
+
+	}
+
+	void drawPlane(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
+	{
+		Matrix4 translation = MatrixTranslate(position);
+		Matrix4 rotation = MatrixXRotation(eulerAngles.x) * MatrixYRotation(eulerAngles.y) * MatrixZRotation(eulerAngles.z);
+		Matrix4 scaleM = MatrixScale(scale);
+
+		Matrix4 model = scaleM * rotation * translation;
+		BlinnPhongVSConstants blinnPhongVSConstants;
+		blinnPhongVSConstants.modelView = model * camera.view;
+		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
+		blinnPhongVSConstants.color = color;
+
+		blinnPhongShader->Bind();
+		blinnPhongShader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		planeVertexBuffer->Bind();
+		planeIndexBuffer->Bind();
+		d3d11DeviceContext->DrawIndexed(planeIndexBuffer->NumIndices(), 0, 0);
+
+	}
+
 	void drawBoundingBox(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
 	{
 		Matrix4 translation = MatrixTranslate(position);
@@ -212,6 +267,27 @@ public:
 		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
 		boundingBoxVertexBuffer->Bind();
 		d3d11DeviceContext->Draw(boundingBoxVertexBuffer->NumVerts(), 0);
+
+	}
+
+	void drawBoundingPlane(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
+	{
+		Matrix4 translation = MatrixTranslate(position);
+		Matrix4 rotation = MatrixXRotation(eulerAngles.x) * MatrixYRotation(eulerAngles.y) * MatrixZRotation(eulerAngles.z);
+		Matrix4 scaleM = MatrixScale(scale);
+
+		Matrix4 model = scaleM * rotation * translation;
+		BlinnPhongVSConstants blinnPhongVSConstants;
+		blinnPhongVSConstants.modelView = model * camera.view;
+		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
+		blinnPhongVSConstants.color = color;
+
+		blinnPhongShader->Bind();
+		blinnPhongShader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
+		boundingPlaneVertexBuffer->Bind();
+		d3d11DeviceContext->Draw(boundingPlaneVertexBuffer->NumVerts(), 0);
 
 	}
 
@@ -287,6 +363,7 @@ class DemoScene : public Scene
 {
 private:
 	Drawable drawable;
+	Drawable childDrawable;
 	VertexBuffer* boundingBox;
 
 public:
@@ -299,9 +376,23 @@ public:
 		drawable.color = { 1,1,0,1 };
 		drawable.eulerRotation = { (float)currentTimeInSeconds, (float)currentTimeInSeconds , (float)currentTimeInSeconds };
 		drawable.setModel();
-		drawable.vertexBuffer = new VertexBuffer(boundingBoxVerts, 24, 3 * sizeof(float), 0, false);
-		drawable.indexBuffer = nullptr;
-		drawable.topologyType = DrawableType::LINE_LIST;
+		drawable.vertexBuffer = cubeVertexBuffer;
+		drawable.indexBuffer = cubeIndexBuffer;
+		drawable.topologyType = DrawableType::TRIANGLE_LIST; 
+
+		childDrawable.position = { 0, 3, 0 };
+		childDrawable.scale = { 1, 1, 1 };
+		childDrawable.color = { 1,1,0,1 };
+		childDrawable.eulerRotation = { 0,0,0 };
+		childDrawable.setModel();
+		childDrawable.vertexBuffer = sphereVertexBuffer;
+		childDrawable.indexBuffer = sphereIndexBuffer;
+		childDrawable.topologyType = DrawableType::TRIANGLE_LIST;
+
+		drawable.childDrawable = &childDrawable;
+
+
+			camera.cameraPos += {0, 1, 0};
 
 	}
 
@@ -312,9 +403,15 @@ public:
 		Scene::moveCamera(dt);
 		Scene::updateLights(blinnPhongShader, { 1.0, 0,0,0 }, { 1,0,0,1 });
 
-		drawBoundingBox({ 2,0,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 0, 0, 1, 0 });
-		drawBox({ 2,0,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 1, 1, 1, 0 });
+		//drawBoundingBox({ 2,1,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 0, 0, 1, 0 });
+		//drawBox({ 2,1,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 1, 1, 1, 0 });
+		//drawSphere({ -2,1,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 1, 1, 1, 0 });
+		drawPlane({ 0,0,0 }, { 10,1,10 }, { 0,0,0 }, { 1, 1, 1, 0 });
+		//drawBoundingPlane({ 0,0,0 }, { 9.9,1,9.9 }, { 0,0,0 }, { 1, 0, 0, 0 });
 		//drawable.draw(blinnPhongShader);
+		drawable.eulerRotation = { (float)currentTimeInSeconds, (float)currentTimeInSeconds , (float)currentTimeInSeconds };
+		Matrix4 mat(1.0f);
+		drawable.draw(blinnPhongShader, mat);
 
 	}
 };

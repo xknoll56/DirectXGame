@@ -142,7 +142,7 @@ public:
 
 };
 
-#include <vector>
+
 static float boundingBoxVerts[] =
 {
       -0.505f, 0.505f, -0.505f,  -0.505f, 0.505f, 0.505f,
@@ -161,3 +161,10 @@ static float boundingBoxVerts[] =
       0.505f, 0.505f, -0.505f,  0.505f, -0.505f, -0.505f
 };
 
+static float boundingPlaneVerts[] =
+{
+    -1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f,
+    -1.0f, 0.0f, -1.0f, 1.0f, 0.0f, -1.0f,
+     1.0f, 0.0f, -1.0f, 1.0f, 0.0f, -1.0f,
+     1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f
+};
