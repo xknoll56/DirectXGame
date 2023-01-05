@@ -33,6 +33,6 @@ struct BlinnPhongVSConstants
 {
     Matrix4 modelViewProj;
     Matrix4 modelView;
-    Vector3x3 normalMatrix;
+    Matrix3 normalMatrix;
     Vector4 color;
 };

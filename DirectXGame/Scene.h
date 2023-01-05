@@ -18,7 +18,7 @@ protected:
 	IndexBuffer* cylinderIndexBuffer;
 
 	VertexBuffer* sphereVertexBuffer;
-	IndexBuffer*  sphereIndexBuffer;
+	IndexBuffer* sphereIndexBuffer;
 
 	Shader* lightShader;
 	Shader* blinnPhongShader;
@@ -29,7 +29,7 @@ public:
 	virtual void updateLights(Shader* shader, Vector4 dirLight, Vector4 color)
 	{
 		BlinnPhongPSConstants blinnPhongFSConstants;
-		blinnPhongFSConstants.dirLight.dirEye = normalise(Vector4{ 1.f, 0.f, 0.f, 0.f });
+		blinnPhongFSConstants.dirLight.dirEye = VectorNormalize(Vector4{ 1.f, 0.f, 0.f, 0.f });
 		blinnPhongFSConstants.dirLight.color = { 1.0f, 1.0f, 1.0f, 1.f };
 		blinnPhongShader->SetPixelShaderUniformBuffer("pbPixelConstants", blinnPhongFSConstants);
 	}
@@ -40,17 +40,17 @@ public:
 		cubeIndexBuffer = new IndexBuffer(obj.indexBuffer, obj.numIndices);
 		freeLoadedObj(obj);
 
-		 obj = loadObj("plane.obj");
+		obj = loadObj("plane.obj");
 		planeVertexBuffer = new VertexBuffer(obj.vertexBuffer, obj.numVertices, sizeof(VertexData), 0, false);
 		planeIndexBuffer = new IndexBuffer(obj.indexBuffer, obj.numIndices);
 		freeLoadedObj(obj);
 
-		 obj = loadObj("cylinder.obj");
+		obj = loadObj("cylinder.obj");
 		cylinderVertexBuffer = new VertexBuffer(obj.vertexBuffer, obj.numVertices, sizeof(VertexData), 0, false);
 		cylinderIndexBuffer = new IndexBuffer(obj.indexBuffer, obj.numIndices);
 		freeLoadedObj(obj);
 
-		 obj = loadObj("sphere.obj");
+		obj = loadObj("sphere.obj");
 		sphereVertexBuffer = new VertexBuffer(obj.vertexBuffer, obj.numVertices, sizeof(VertexData), 0, false);
 		sphereIndexBuffer = new IndexBuffer(obj.indexBuffer, obj.numIndices);
 		freeLoadedObj(obj);
@@ -80,8 +80,8 @@ public:
 	{
 		// Update camera
 		{
-			Vector3 camFwdXZ = normalise(Vector3{ camera.cameraFwd.x, 0, camera.cameraFwd.z });
-			Vector3 cameraRightXZ = cross(camFwdXZ, { 0, 1, 0 });
+			Vector3 camFwdXZ = VectorNormalize(Vector3{ camera.cameraFwd.x, 0, camera.cameraFwd.z });
+			Vector3 cameraRightXZ = VectorCross(camFwdXZ, { 0, 1, 0 });
 
 			const float CAM_MOVE_SPEED = 5.f; // in metres per second
 			const float CAM_MOVE_AMOUNT = CAM_MOVE_SPEED * dt;
@@ -121,8 +121,10 @@ public:
 			if (camera.cameraPitch < -degreesToRadians(85))
 				camera.cameraPitch = -degreesToRadians(85);
 
-			camera.view = translationMat(-camera.cameraPos) * rotateYMat(-camera.cameraYaw) * rotateXMat(-camera.cameraPitch);
-			}
+			camera.view = MatrixYRotation(-camera.cameraYaw) * MatrixXRotation(-camera.cameraPitch);
+			camera.cameraFwd = { -camera.view.mat[2][0], -camera.view.mat[2][1], -camera.view.mat[2][2] };
+			camera.view = MatrixTranslate(-camera.cameraPos) * camera.view;
+		}
 	};
 };
 
@@ -134,7 +136,7 @@ public:
 	BlinnPhongVSConstants blinnPhongVSConstants;
 	Vector3 position;
 	Vector3 eulerRotation;
-	Vector3 scale; 
+	Vector3 scale;
 	Vector4 color;
 	Matrix4 model;
 
@@ -143,7 +145,7 @@ public:
 		position = { 0,0,0 };
 		scale = { 1, 1, 1 };
 		eulerRotation = { 0,0,0 };
-		color = { 1,1,1, 1};
+		color = { 1,1,1, 1 };
 		setModel();
 	}
 
@@ -157,19 +159,39 @@ public:
 
 	void setModel()
 	{
-		Matrix4 translation = translationMat(position);
-		Matrix4 rotation = rotateXMat(eulerRotation.x) * rotateYMat(eulerRotation.y) * rotateZMat(eulerRotation.z);
-		Matrix4 scaleM = scaleMat(scale);
+		Matrix4 translation = MatrixTranslate(position);
+		Matrix4 rotation = MatrixXRotation(eulerRotation.x) * MatrixYRotation(eulerRotation.y) * MatrixZRotation(eulerRotation.z);
+		Matrix4 scaleM = MatrixScale(scale);
 
-		model =  scaleM * rotation * translation;
+		model = scaleM * rotation * translation;
 	}
+	void draw(Shader* shader, Vector3 position, Vector3 scale, Vector3 eulerRotation)
+	{
+		this->position = position;
+		this->scale = scale;
+		this->eulerRotation = eulerRotation;
+		setModel();
 
+		blinnPhongVSConstants.modelView = model * camera.view;
+		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
+		blinnPhongVSConstants.color = color;
+
+		shader->Bind();
+		shader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
+		vertexBuffer->Bind();
+		indexBuffer->Bind();
+
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		d3d11DeviceContext->DrawIndexed(indexBuffer->NumIndices(), 0, 0);
+	}
 	void draw(Shader* shader)
 	{
 		setModel();
 		blinnPhongVSConstants.modelView = model * camera.view;
 		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
-		blinnPhongVSConstants.normalMatrix = Matrix4ToVector3x3(model);
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
 		blinnPhongVSConstants.color = color;
 
 		shader->Bind();
@@ -213,38 +235,22 @@ public:
 
 
 		Scene::moveCamera(dt);
-		Scene::updateLights(blinnPhongShader, {1.0, 0,0,0}, {1,0,0,1});
+		Scene::updateLights(blinnPhongShader, { 1.0, 0,0,0 }, { 1,0,0,1 });
 
-		Matrix4 viewMat = translationMat(-camera.cameraPos) * rotateYMat(-camera.cameraYaw) * rotateXMat(-camera.cameraPitch);
-		Matrix4 inverseViewMat = inverse(viewMat);
-		//Matrix4 inverseViewMat = rotateXMat(camera.cameraPitch) * rotateYMat(camera.cameraYaw) * translationMat(camera.cameraPos);
-		// Update the forward vector we use for camera movement:
-		camera.cameraFwd = { -viewMat.m[2][0], -viewMat.m[2][1], -viewMat.m[2][2] };
-		camera.view = viewMat;
+		blinnPhongShader->Bind();
+		Drawable drawable;
+		drawable.position = { 3, 0, 0 };
+		drawable.scale = { 2, 2, 2 };
+		drawable.color = { 1,1,0,1 };
+		drawable.eulerRotation = { (float)currentTimeInSeconds, (float)currentTimeInSeconds , (float)currentTimeInSeconds };
+		drawable.setModel();
+		drawable.vertexBuffer = sphereVertexBuffer;
+		drawable.indexBuffer = sphereIndexBuffer;
 
+		drawable.vertexBuffer->Bind();
+		drawable.indexBuffer->Bind();
 
+		drawable.draw(blinnPhongShader);
 
-		// Draw lights
-		{
-			lightShader->Bind();
-		}
-		// Draw cubes
-		{
-			blinnPhongShader->Bind();
-			Drawable drawable;
-			drawable.position = { 3, 0, 0 };
-			drawable.scale = { 2, 2, 2 };
-			drawable.color = { 1,1,0,1 };
-			drawable.eulerRotation = { 0, (float)currentTimeInSeconds , 0.0f };
-			drawable.setModel();
-			drawable.vertexBuffer = sphereVertexBuffer;
-			drawable.indexBuffer = sphereIndexBuffer;
-
-			drawable.vertexBuffer->Bind();
-			drawable.indexBuffer->Bind();
-
-			drawable.draw(blinnPhongShader);
-
-		}
 	}
 };

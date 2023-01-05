@@ -273,7 +273,7 @@ public:
             assert(SUCCEEDED(res));
 
             win32CreateD3D11RenderTargets(d3d11Device, d3d11SwapChain, &d3d11FrameBufferView, &depthBufferView);
-            camera.perspectiveMat = makePerspectiveMat(windowAspectRatio, degreesToRadians(84), 0.1f, 1000.f);
+            camera.perspectiveMat = MatrixPerspective(windowAspectRatio, degreesToRadians(84), 0.1f, 1000.f);
 
             global_windowDidResize = false;
         }
