@@ -120,6 +120,8 @@ protected:
 
 	VertexBuffer* boundingPlaneVertexBuffer;
 
+	VertexBuffer* lineVertexBuffer;
+
 	Shader* lightShader;
 	Shader* blinnPhongShader;
 
@@ -159,6 +161,8 @@ public:
 		boundingBoxVertexBuffer = new VertexBuffer(boundingBoxVerts, 24, 3 * sizeof(float), 0, false);
 
 		boundingPlaneVertexBuffer = new VertexBuffer(boundingPlaneVerts, 8, 3 * sizeof(float), 0, false);
+
+		lineVertexBuffer = new VertexBuffer(lineVerts, 2, 3 * sizeof(float), 0, false);
 
 
 
@@ -291,6 +295,41 @@ public:
 
 	}
 
+	void drawLine(Vector3 from, Vector3 to, Vector4 color)
+	{
+		Vector3 dir = to - from;
+		float dist = VectorLength(dir);
+		dir = VectorNormalize(dir);
+		Vector3 dirXZ(dir.x, 0, dir.z);
+		dirXZ = VectorNormalize(dirXZ);
+		float theta = - asinf(dirXZ.z);
+		theta = dirXZ.x <= 0.0f ? (3.14159f - theta) : theta;
+		float psi = atanf(dir.y / sqrtf(dir.x * dir.x + dir.z * dir.z));
+		if (dir.x == 0.0f && dir.z == 0.0f)
+		{
+			dir.y > 0.0f ? psi = 3.14159f * 0.5f : psi = -3.141595f * 0.5f;
+			theta = 0.0f;
+		}
+
+		Matrix4 model(1.0f);
+		model = model * MatrixScale({ dist, 1, 1 });
+		model = model * MatrixZRotation(psi);
+		model = model * MatrixYRotation(theta);
+		model = model * MatrixTranslate(from);
+
+		BlinnPhongVSConstants blinnPhongVSConstants;
+		blinnPhongVSConstants.modelView = model * camera.view;
+		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
+		blinnPhongVSConstants.color = color;
+
+		blinnPhongShader->Bind();
+		blinnPhongShader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
+		lineVertexBuffer->Bind();
+		d3d11DeviceContext->Draw(lineVertexBuffer->NumVerts(), 0);
+	}
+
 	void moveCamera(float dt)
 	{
 		// Update camera
@@ -371,7 +410,7 @@ public:
 	void init()
 	{
 		Scene::init();
-		drawable.position = { 3, 0, 3 };
+		drawable.position = { 3, 1, 3 };
 		drawable.scale = { 2, 2, 2 };
 		drawable.color = { 1,1,0,1 };
 		drawable.eulerRotation = { (float)currentTimeInSeconds, (float)currentTimeInSeconds , (float)currentTimeInSeconds };
@@ -380,7 +419,7 @@ public:
 		drawable.indexBuffer = cubeIndexBuffer;
 		drawable.topologyType = DrawableType::TRIANGLE_LIST; 
 
-		childDrawable.position = { 0, 3, 0 };
+		childDrawable.position = { 0, 1, 0 };
 		childDrawable.scale = { 1, 1, 1 };
 		childDrawable.color = { 1,1,0,1 };
 		childDrawable.eulerRotation = { 0,0,0 };
@@ -412,6 +451,9 @@ public:
 		drawable.eulerRotation = { (float)currentTimeInSeconds, (float)currentTimeInSeconds , (float)currentTimeInSeconds };
 		Matrix4 mat(1.0f);
 		drawable.draw(blinnPhongShader, mat);
+
+		drawLine({ 0,0,0 }, { 3, 1, 3 }, { 1,0,0,0 });
+		drawSphere({ 3, 1, 3 }, { 0.1,0.1,0.1 }, { 0,0,0 }, { 1,0,1,0 });
 
 	}
 };

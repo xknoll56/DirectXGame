@@ -168,3 +168,8 @@ static float boundingPlaneVerts[] =
      1.0f, 0.0f, -1.0f, 1.0f, 0.0f, -1.0f,
      1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f
 };
+
+static float lineVerts[] = {
+    0.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f
+};

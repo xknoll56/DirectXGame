@@ -1,1 +1,15 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(439,5): error MSB8020: The build tools for v143 (Platform Toolset = 'v143') cannot be found. To build using the v143 build tools, please install v143 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  Main.cpp
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp(3,1): warning C4005: 'UNICODE': macro redefinition
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp : message : see previous definition of 'UNICODE'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1374,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(355,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(368,1): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(370,1): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(456,1): warning C4305: 'argument': truncation from 'double' to 'float'
+  ObjLoading.cpp
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(317,42): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(318,40): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+  Generating Code...
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(959): warning C4715: 'Vector4::operator[]': not all control paths return a value
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1122): warning C4715: 'Matrix4::row': not all control paths return a value
+  DirectXGame.vcxproj -> C:\Users\Xavier\Documents\GitHub\DirectXGame\x64\Debug\DirectXGame.exe
