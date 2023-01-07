@@ -1128,6 +1128,30 @@ struct Matrix4
 	}
 };
 
+struct Quaternion
+{
+	float w, x, y, z;
+
+	Quaternion()
+	{
+
+	}
+
+	Quaternion(float w, float x, float y, float z)
+	{
+		this->w = w;
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+
+	Quaternion(Vector3 vec)
+	{
+
+	}
+};
+
+
 
 inline Vector2 operator+(Vector2& a, Vector2& b)
 {

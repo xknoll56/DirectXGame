@@ -1,15 +1,154 @@
 ﻿  Main.cpp
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp(3,1): warning C4005: 'UNICODE': macro redefinition
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp : message : see previous definition of 'UNICODE'
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1374,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(355,1): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(368,1): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(370,1): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(456,1): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1392,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(329,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(342,1): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(344,1): warning C4305: '+=': truncation from 'double' to 'float'
   ObjLoading.cpp
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(317,42): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(318,40): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+  UniformRigidBody.cpp
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(17,13): error C3646: 'position': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(17,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(18,16): error C3646: 'rotation': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(18,24): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(19,13): error C3646: 'rotationMatrix': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(19,27): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(20,13): error C3646: 'linearMomentum': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(20,27): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(21,13): error C3646: 'angularMomentum': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(21,28): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(24,13): error C3646: 'velocity': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(24,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(25,13): error C3646: 'angularVelocity': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(25,28): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(28,13): error C3646: 'gravitionalForce': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(28,29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(29,13): error C3646: 'torque': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(29,19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(32,17): error C2065: 'Vector3': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(32,10): error C2923: 'std::vector': 'Vector3' is not a valid template type argument for parameter '_Ty'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(32): message : see declaration of 'Vector3'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(32,10): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(430): message : see declaration of 'std::vector'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(33,17): error C2065: 'Vector3': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(33,10): error C2923: 'std::vector': 'Vector3' is not a valid template type argument for parameter '_Ty'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(33): message : see declaration of 'Vector3'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(33,10): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(430): message : see declaration of 'std::vector'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(48,32): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(48,32): error C2143: syntax error: missing ',' before '&'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(49,33): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(49,33): error C2143: syntax error: missing ',' before '&'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(50,32): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(50,32): error C2143: syntax error: missing ',' before '&'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(50,66): error C2535: 'void UniformRigidBody::addForce(const int)': member function already defined or declared
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(48): message : see declaration of 'UniformRigidBody::addForce'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(51,33): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(51,33): error C2143: syntax error: missing ',' before '&'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(51,68): error C2535: 'void UniformRigidBody::addTorque(const int)': member function already defined or declared
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(49): message : see declaration of 'UniformRigidBody::addTorque'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(52,35): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(52,35): error C2143: syntax error: missing ',' before '&'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(53,42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(53,42): error C2143: syntax error: missing ',' before '&'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(54,13): error C3646: 'getLocalXAxis': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(54,26): error C2059: syntax error: '('
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(54,28): error C2238: unexpected token(s) preceding ';'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(55,13): error C3646: 'getLocalYAxis': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(55,26): error C2059: syntax error: '('
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(55,28): error C2238: unexpected token(s) preceding ';'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(56,13): error C3646: 'getLocalZAxis': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(56,26): error C2059: syntax error: '('
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(56,28): error C2238: unexpected token(s) preceding ';'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(57,13): error C3646: 'peekNextPosition': unknown override specifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(57,29): error C2059: syntax error: '('
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(57,39): error C2238: unexpected token(s) preceding ';'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(6,1): error C2512: 'std::vector': no appropriate default constructor available
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(430,1): message : see declaration of 'std::vector'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(11,5): error C2065: 'position': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(11,16): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(12,5): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(12,27): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(12,16): error C3861: 'Quaternion': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(13,5): error C2065: 'linearMomentum': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(13,22): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(14,5): error C2065: 'angularMomentum': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(14,23): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(15,5): error C2065: 'velocity': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(15,16): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(16,5): error C2065: 'angularVelocity': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(16,23): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(17,5): error C2065: 'gravitionalForce': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(17,24): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(18,5): error C2065: 'torque': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(18,14): error C3861: 'Vector3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(19,5): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(19,16): error C2653: 'glm': is not a class or namespace name
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(19,31): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(19,21): error C3861: 'normalize': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(20,5): error C2065: 'rotationMatrix': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(20,22): error C2653: 'glm': is not a class or namespace name
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(20,34): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(20,27): error C3861: 'toMat3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(24,1): error C2512: 'std::vector': no appropriate default constructor available
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(430,1): message : see declaration of 'std::vector'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(29,5): error C2065: 'position': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(29,22): error C2039: 'position': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(30,5): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(30,22): error C2039: 'rotation': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(31,5): error C2065: 'linearMomentum': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(31,28): error C2039: 'linearMomentum': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(32,5): error C2065: 'angularMomentum': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(32,29): error C2039: 'angularMomentum': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(33,5): error C2065: 'velocity': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(33,22): error C2039: 'velocity': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(34,5): error C2065: 'angularVelocity': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(34,29): error C2039: 'angularVelocity': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(35,5): error C2065: 'gravitionalForce': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(35,30): error C2039: 'gravitionalForce': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(36,5): error C2065: 'torque': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(36,20): error C2039: 'torque': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(37,5): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(37,16): error C2653: 'glm': is not a class or namespace name
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(37,31): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(37,21): error C3861: 'normalize': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(38,5): error C2065: 'rotationMatrix': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(38,22): error C2653: 'glm': is not a class or namespace name
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(38,34): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(38,27): error C3861: 'toMat3': identifier not found
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(47,5): error C2065: 'position': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(47,22): error C2039: 'position': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(48,5): error C2065: 'rotation': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(48,22): error C2039: 'rotation': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(49,5): error C2065: 'linearMomentum': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(49,28): error C2039: 'linearMomentum': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(50,5): error C2065: 'angularMomentum': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(50,29): error C2039: 'angularMomentum': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(51,5): error C2065: 'velocity': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(51,22): error C2039: 'velocity': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(52,5): error C2065: 'angularVelocity': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(52,29): error C2039: 'angularVelocity': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(53,5): error C2065: 'gravitionalForce': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(53,30): error C2039: 'gravitionalForce': is not a member of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.h(6): message : see declaration of 'UniformRigidBody'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(54,5): error C2065: 'torque': undeclared identifier
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\UniformRigidBody.cpp(54,12): fatal error C1003: error count exceeds 100; stopping compilation
   Generating Code...
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(959): warning C4715: 'Vector4::operator[]': not all control paths return a value
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1122): warning C4715: 'Matrix4::row': not all control paths return a value
-  DirectXGame.vcxproj -> C:\Users\Xavier\Documents\GitHub\DirectXGame\x64\Debug\DirectXGame.exe

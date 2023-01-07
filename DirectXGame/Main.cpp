@@ -27,9 +27,11 @@ struct Camera
     float cameraYaw = 0.f;
     Matrix4 perspectiveMat = {};
     Matrix4 view = {};
+
 };
 
 Camera camera;
+#include "UniformRigidBody.h"
 #include "Scene.h"
 #include "Renderer.h"
 #include "Drawable.h"
