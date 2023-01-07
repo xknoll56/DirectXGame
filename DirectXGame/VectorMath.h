@@ -1212,6 +1212,7 @@ struct Quaternion
 	Matrix4 ToMatrix4()
 	{
 		Matrix4 ret(1.0f);
+		//x = -x;
 		ret.mat[0][0] = 2 * (w * w + x * x) - 1;
 		ret.mat[0][1] = 2 * (x * y - w * z);
 		ret.mat[0][2] = 2 * (x * z + w * y);
@@ -1477,6 +1478,46 @@ inline Vector4 VectorNormalize(Vector4 vec)
 	return { vec.x / len, vec.y / len, vec.z / len, vec.w/len };
 }
 
+inline float VectorLengthSquared(Vector3 vec)
+{
+	return  vec.x * vec.x+ vec.y * vec.y+ vec.z * vec.z ;
+}
+
+inline bool VectorEpsilonEqual(Vector3 a, Vector3 b, float e)
+{
+	return abs(a.x - b.x) <= e && abs(a.y - b.y) <= e && abs(a.z - b.z) <= e;
+}
+
+inline bool EpsilonEqual(float a, float b, float e)
+{
+	return abs(a - b) <= e;
+}
+
+inline float Sign(float f)
+{
+	f >= 0 ? 1.0f : -1.0f;
+	return f;
+}
+
+inline bool AllEqual(Vector3 a, Vector3 b)
+{
+	return a.x == b.x && a.y == b.y && a.z == b.z;
+}
+
+inline Vector3 operator*(Vector3 a, Vector3 b)
+{
+	return { a.x * b.x, a.y * b.y, a.z * b.z };
+}
+
+inline bool allNaN(Vector3 a)
+{
+	return isnan(a.x) && isnan(a.y) && isnan(a.z);
+}
+
+inline Vector3 operator/(Vector3 vec, float f)
+{
+	return Vector3{ vec.x / f, vec.y / f, vec.z / f };
+}
 inline Matrix4 MatrixTranslate(Vector3 translation)
 {
 	Matrix4 mat;

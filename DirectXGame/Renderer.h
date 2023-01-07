@@ -258,7 +258,7 @@ public:
         setStates();
         
         demoScene.update(dt);
-        d3d11SwapChain->Present(1, 0);
+        d3d11SwapChain->Present(0, 0);
     }
 
     void setStates()

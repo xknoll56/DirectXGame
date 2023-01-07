@@ -33,6 +33,7 @@ struct Camera
 Camera camera;
 #include "UniformRigidBody.h"
 #include "Collider.h"
+#include "PhysicsWorld.h"
 #include "Scene.h"
 #include "Renderer.h"
 #include "Drawable.h"

@@ -473,31 +473,44 @@ class Terrain
 class DemoScene : public Scene
 {
 private:
-	Drawable drawable;
-	Drawable childDrawable;
-	VertexBuffer* boundingBox;
-	Quaternion rotation;
+	BoxCollider boxCollider;
+	SphereCollider sphereCollider;
+	UniformRigidBody boxBody;
+	UniformRigidBody sphereBody;
+	PhysicsWorld world;
 
 public:
 
 	void init()
 	{
 		Scene::init();
-		camera.cameraPos += {0, 1, 0};
+		camera.cameraPos += {0, 2, 5};
+		boxCollider = BoxCollider({ 10.0f, 0.01f, 10.0f });
 
+		boxBody = UniformRigidBody(10.0f, 1.0f);
+		sphereBody = UniformRigidBody(5.0f, 1.0f);
+		sphereCollider = SphereCollider({ 1.0f });
+		sphereBody.position = { 0, 5.0f, 0 };
+		boxBody.rotation = Quaternion::FromEulerAngles({ -0.00f, 0.0f, 0.45 });
+
+		boxCollider.rb = &boxBody;
+		sphereCollider.rb = &sphereBody;
+		boxCollider.rb->dynamic = false;
+		sphereCollider.rb->dynamic = true;
+
+		std::vector<Collider*> colliders = { &sphereCollider, &boxCollider };
+		world.colliders = colliders;
+		world.enableResponse = true;
+		world.setColliders(&colliders);
 	}
 
 	void update(float dt)
 	{
+
 		Scene::moveCamera(dt);
 		Scene::updateLights(blinnPhongShader, { 1.0, 0,0,0 }, { 1,0,0,1 });
-
-		drawPlane({ 0,0,0 }, { 10,1,10 }, { 0,0,0 }, { 1, 1, 1, 0 });
-		
-		rotation = Quaternion::FromEulerAngles({ 0, 0, (float)currentTimeInSeconds });
-		drawBoundingBox({ 0,2,0 }, { 1,1,1 },rotation, { 0, 1, 0, 0 });
-		drawBox({ 0,2,0 }, { 1,1,1 }, rotation, { 1, 1, 1, 0 });
-		
-		drawBoundingPlane({ 0,0,0 }, { 10,1,10 }, { 0,0,0 }, { 1, 1, 1, 0 });
+		world.stepWorld(dt);
+		drawBox(boxCollider.rb->position, boxCollider.scale, boxCollider.rb->rotation, { 1, 1, 1, 0 });
+		drawSphere(sphereCollider.rb->position, 0.5f*sphereCollider.scale, sphereCollider.rb->rotation, { 1,1,1,1 });
 	}
 };
