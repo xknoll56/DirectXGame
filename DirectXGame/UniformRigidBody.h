@@ -17,7 +17,7 @@ struct UniformRigidBody
     //state variables
     Vector3 position;
     Quaternion rotation;
-    Matrix3 rotationMatrix;
+    Matrix3x3 rotationMatrix;
     Vector3 linearMomentum;
     Vector3 angularMomentum;
 

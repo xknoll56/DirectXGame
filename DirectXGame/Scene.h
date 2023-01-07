@@ -213,6 +213,23 @@ public:
 		blinnPhongShader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
 	}
 
+	void setShaderConstants(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		Matrix4 translationM = MatrixTranslate(position);
+		Matrix4 rotationM = rotation.ToMatrix4();
+		Matrix4 scaleM = MatrixScale(scale);
+
+		Matrix4 model = scaleM * rotationM * translationM;
+		BlinnPhongVSConstants blinnPhongVSConstants;
+		blinnPhongVSConstants.modelView = model * camera.view;
+		blinnPhongVSConstants.modelViewProj = model * camera.view * camera.perspectiveMat;
+		blinnPhongVSConstants.normalMatrix = model.ToMatrix3();
+		blinnPhongVSConstants.color = color;
+
+		blinnPhongShader->Bind();
+		blinnPhongShader->SetVertexShaderUniformBuffer("pbVertexConstants", blinnPhongVSConstants);
+	}
+
 	void drawBox(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
 	{
 		setShaderConstants(position, scale, eulerAngles, color);
@@ -263,6 +280,64 @@ public:
 	void drawBoundingPlane(Vector3 position, Vector3 scale, Vector3 eulerAngles, Vector4 color)
 	{
 		setShaderConstants(position, scale, eulerAngles, color);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
+		boundingPlaneVertexBuffer->Bind();
+		d3d11DeviceContext->Draw(boundingPlaneVertexBuffer->NumVerts(), 0);
+
+	}
+
+
+
+	void drawBox(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		setShaderConstants(position, scale, rotation, color);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		cubeVertexBuffer->Bind();
+		cubeIndexBuffer->Bind();
+		d3d11DeviceContext->DrawIndexed(cubeIndexBuffer->NumIndices(), 0, 0);
+
+	}
+
+	void drawSphere(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		setShaderConstants(position, scale, rotation, color);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		sphereVertexBuffer->Bind();
+		sphereIndexBuffer->Bind();
+		d3d11DeviceContext->DrawIndexed(sphereIndexBuffer->NumIndices(), 0, 0);
+
+	}
+
+	void drawPlane(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		setShaderConstants(position, scale, rotation, color);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		planeVertexBuffer->Bind();
+		planeIndexBuffer->Bind();
+		d3d11DeviceContext->DrawIndexed(planeIndexBuffer->NumIndices(), 0, 0);
+	}
+
+	void drawCapsule(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		setShaderConstants(position, scale, rotation, color);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		capsuleVertexBuffer->Bind();
+		capsuleIndexBuffer->Bind();
+		d3d11DeviceContext->DrawIndexed(capsuleIndexBuffer->NumIndices(), 0, 0);
+	}
+
+	void drawBoundingBox(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		setShaderConstants(position, scale, rotation, color);
+		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
+		boundingBoxVertexBuffer->Bind();
+		d3d11DeviceContext->Draw(boundingBoxVertexBuffer->NumVerts(), 0);
+
+	}
+
+	void drawBoundingPlane(Vector3 position, Vector3 scale, Quaternion rotation, Vector4 color)
+	{
+		setShaderConstants(position, scale, rotation, color);
 		d3d11DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
 		boundingPlaneVertexBuffer->Bind();
 		d3d11DeviceContext->Draw(boundingPlaneVertexBuffer->NumVerts(), 0);
@@ -401,6 +476,7 @@ private:
 	Drawable drawable;
 	Drawable childDrawable;
 	VertexBuffer* boundingBox;
+	Quaternion rotation;
 
 public:
 
@@ -417,8 +493,11 @@ public:
 		Scene::updateLights(blinnPhongShader, { 1.0, 0,0,0 }, { 1,0,0,1 });
 
 		drawPlane({ 0,0,0 }, { 10,1,10 }, { 0,0,0 }, { 1, 1, 1, 0 });
-		drawBoundingBox({ 0,2,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 0, 1, 0, 0 });
-		drawBox({ 0,2,0 }, { 1,1,1 }, { (float)currentTimeInSeconds,(float)currentTimeInSeconds,(float)currentTimeInSeconds }, { 1, 1, 1, 0 });
+		
+		rotation = Quaternion::FromEulerAngles({ 0, 0, (float)currentTimeInSeconds });
+		drawBoundingBox({ 0,2,0 }, { 1,1,1 },rotation, { 0, 1, 0, 0 });
+		drawBox({ 0,2,0 }, { 1,1,1 }, rotation, { 1, 1, 1, 0 });
+		
 		drawBoundingPlane({ 0,0,0 }, { 10,1,10 }, { 0,0,0 }, { 1, 1, 1, 0 });
 	}
 };

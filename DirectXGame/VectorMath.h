@@ -902,6 +902,7 @@ inline float DegreesToRadians(float degrees)
 #else
 #include <ostream>
 
+struct Vector3;
 struct Vector4
 {
 	float x, y, z, w;
@@ -929,6 +930,11 @@ struct Vector4
 		this->z = vector.z;
 		this->w = vector.w;
 	}
+
+	Vector4(Vector3& vector);
+
+	Vector4(const Vector3& vector);
+
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector4& vec)
 	{
@@ -961,7 +967,6 @@ struct Quaternion;
 struct Vector3
 {
 	float x, y, z;
-
 	Vector3()
 	{
 		x = 0.0f;
@@ -1004,6 +1009,9 @@ struct Vector3
 	}
 };
 
+
+
+
 struct Vector2
 {
 	float x, y;
@@ -1036,6 +1044,47 @@ struct Vector2
 };
 
 
+struct Matrix3x3
+{
+	Vector3 mat[3];
+
+	Matrix3x3(float f)
+	{
+		mat[0] = { f, 0.0f, 0.0f };
+		mat[1] = { 0.0f, f, 0.0f };
+		mat[2] = { 0.0f, 0.0f, f };
+	}
+
+	Matrix3x3()
+	{
+		mat[0] = { 1.0f, 0.0f, 0.0f };
+		mat[1] = { 0.0f, 1.0f, 0.0f };
+		mat[2] = { 0.0f, 0.0f, 1.0f };
+	}
+
+
+	inline Vector3 row(int i)
+	{
+		switch (i)
+		{
+		case 0:
+			return { mat[0].x,mat[1].x,mat[2].x };
+			break;
+		case 1:
+			return { mat[0].y,mat[1].y,mat[2].y };
+			break;
+		case 2:
+			return { mat[0].z,mat[1].z,mat[2].z };
+			break;
+		}
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Matrix3x3& mat)
+	{
+		os << mat.mat[0] << std::endl << mat.mat[1] << std::endl << mat.mat[2];
+		return os;
+	}
+};
 struct Matrix3
 {
 	Vector4 mat[3];
@@ -1175,26 +1224,26 @@ struct Quaternion
 		return ret;
 	}
 
-	Matrix3 ToMatrix3()
+	Matrix3x3 ToMatrix3x3()
 	{
-		Matrix3 ret;
-		ret.mat[0][0] = 2 * (w * w + x * x) - 1;
-		ret.mat[0][1] = 2 * (x * y - w * z);
-		ret.mat[0][2] = 2 * (x * z + w * y);
-		ret.mat[1][0] = 2 * (x * y + w * z);
-		ret.mat[1][1] = 2 * (w * w + y * y) - 1;
-		ret.mat[1][2] = 2 * (y * z - w * x);
-		ret.mat[2][0] = 2 * (x * z - w * y);
-		ret.mat[2][1] = 2 * (y * z + w * x);
-		ret.mat[2][2] = 2 * (w * w + z * z) - 1;
+		Matrix3x3 ret;
+		ret.mat[0].x = 2 * (w * w + x * x) - 1;
+		ret.mat[0].y = 2 * (x * y - w * z);
+		ret.mat[0].z = 2 * (x * z + w * y);
+		ret.mat[1].x = 2 * (x * y + w * z);
+		ret.mat[1].y = 2 * (w * w + y * y) - 1;
+		ret.mat[1].z = 2 * (y * z - w * x);
+		ret.mat[2].x = 2 * (x * z - w * y);
+		ret.mat[2].y = 2 * (y * z + w * x);
+		ret.mat[2].z = 2 * (w * w + z * z) - 1;
 		return ret;
 	}
 
 	static Quaternion FromEulerAngles(Vector3 euler)
 	{
 		Quaternion q{ 1,0,0,0 };
-		float yaw = euler.y;
-		float pitch = euler.z;
+		float yaw = euler.z;
+		float pitch = euler.y;
 		float roll = euler.x;
 
 		double cy = cos(yaw * 0.5);
@@ -1220,8 +1269,14 @@ struct Quaternion
 		z /= mag;
 	}
 
+
+
 };
 
+inline Quaternion fromMatrix3(Matrix3x3 mat)
+{
+	return Quaternion();
+}
 
 inline Quaternion operator*(Quaternion a, Quaternion b)
 {
@@ -1269,7 +1324,12 @@ inline Vector2 operator+(Vector2& a, Vector2& b)
 	return { a.x + b.x, a.y + b.y };
 }
 
-inline Vector3 operator+(Vector3& a, Vector3& b)
+//inline Vector3 operator+(Vector3& a, Vector3& b)
+//{
+//	return { a.x + b.x, a.y + b.y,  a.z + b.z };
+//}
+
+inline Vector3 operator+(Vector3 a, Vector3 b)
 {
 	return { a.x + b.x, a.y + b.y,  a.z + b.z };
 }
@@ -1284,7 +1344,12 @@ inline Vector2 operator-(Vector2& a, Vector2& b)
 	return { a.x - b.x, a.y - b.y };
 }
 
-inline Vector3 operator-(Vector3& a, Vector3& b)
+//inline Vector3 operator-(Vector3& a, Vector3& b)
+//{
+//	return { a.x - b.x, a.y - b.y,  a.z - b.z };
+//}
+
+inline Vector3 operator-(Vector3 a, Vector3 b)
 {
 	return { a.x - b.x, a.y - b.y,  a.z - b.z };
 }
@@ -1349,7 +1414,7 @@ inline Vector3 operator-(Vector3 vec)
 	return { -vec.x, -vec.y, -vec.z };
 }
 
-inline Vector3 operator*(float& a, Vector3& b)
+inline Vector3 operator*(float a, Vector3 b)
 {
 	return Vector3(a * b.x, a * b.y, a * b.z);
 }

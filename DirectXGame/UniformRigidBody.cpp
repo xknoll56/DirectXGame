@@ -17,7 +17,7 @@ UniformRigidBody::UniformRigidBody(float _mass, float _inertia)
     gravitionalForce = Vector3();
     torque = Vector3();
     rotation.normalize();
-    rotationMatrix = rotation.ToMatrix3();
+    rotationMatrix = rotation.ToMatrix3x3();
 }
 
 UniformRigidBody::UniformRigidBody(const UniformRigidBody& other)
@@ -35,7 +35,7 @@ UniformRigidBody::UniformRigidBody(const UniformRigidBody& other)
     gravitionalForce = other.gravitionalForce;
     torque = other.torque;
     rotation.normalize();
-    rotationMatrix = rotation.ToMatrix3();
+    rotationMatrix = rotation.ToMatrix3x3();
 }
 
 UniformRigidBody& UniformRigidBody::operator= (const UniformRigidBody& other)
@@ -53,7 +53,7 @@ UniformRigidBody& UniformRigidBody::operator= (const UniformRigidBody& other)
     gravitionalForce = other.gravitionalForce;
     torque = other.torque;
     rotation.normalize();
-    rotationMatrix = rotation.ToMatrix3();
+    rotationMatrix = rotation.ToMatrix3x3();
     return *this;
 }
 
@@ -70,7 +70,7 @@ UniformRigidBody::UniformRigidBody(): mass(1.0f), inertia(1.0f)
     gravitionalForce = Vector3();
     torque = Vector3();
     rotation.normalize();
-    rotationMatrix = rotation.ToMatrix3();
+    rotationMatrix = rotation.ToMatrix3x3();
 }
 
 
@@ -163,7 +163,7 @@ void UniformRigidBody::stepQuantities(float dt)
         Quaternion angularVelQuat(0.0f, angularVelocity.x, angularVelocity.y, angularVelocity.z);
         rotation = rotation + (dt*0.5f) * angularVelQuat *rotation;
         rotation.normalize();
-        rotationMatrix = rotation.ToMatrix3();
+        rotationMatrix = rotation.ToMatrix3x3();
         position+=dt*velocity;
     }
     else
@@ -171,7 +171,7 @@ void UniformRigidBody::stepQuantities(float dt)
         angularMomentum = Vector3();
         linearMomentum = Vector3();
         rotation.normalize();
-        rotationMatrix = rotation.ToMatrix3();
+        rotationMatrix = rotation.ToMatrix3x3();
     }
 }
 
