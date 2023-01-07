@@ -592,10 +592,7 @@ struct Matrix4
 };
 
 
-struct GB_Quaternion
-{
 
-};
 
 
 inline Vector2 operator+(Vector2& a, Vector2& b)
@@ -959,6 +956,8 @@ struct Vector4
 	}
 };
 
+struct Quaternion;
+
 struct Vector3
 {
 	float x, y, z;
@@ -982,6 +981,13 @@ struct Vector3
 		this->x = vector.x;
 		this->y = vector.y;
 		this->z = vector.z;
+	}
+
+	Vector3(const Vector4& vec)
+	{
+		x = vec.x;
+		y = vec.y;
+		z = vec.z;
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector3& vec)
@@ -1145,12 +1151,117 @@ struct Quaternion
 		this->z = z;
 	}
 
-	Quaternion(Vector3 vec)
+	Quaternion conjugate()
 	{
-
+		Quaternion q{ w, x, y, z };
+		x = -x;
+		y = -y;
+		z = -z;
+		return q;
 	}
+
+	Matrix4 ToMatrix4()
+	{
+		Matrix4 ret(1.0f);
+		ret.mat[0][0] = 2 * (w * w + x * x) - 1;
+		ret.mat[0][1] = 2 * (x * y - w * z);
+		ret.mat[0][2] = 2 * (x * z + w * y);
+		ret.mat[1][0] = 2 * (x * y + w * z);
+		ret.mat[1][1] = 2 * (w * w + y * y) - 1;
+		ret.mat[1][2] = 2 * (y * z - w * x);
+		ret.mat[2][0] = 2 * (x * z - w * y);
+		ret.mat[2][1] = 2 * (y * z + w * x);
+		ret.mat[2][2] = 2 * (w * w + z * z) - 1;
+		return ret;
+	}
+
+	Matrix3 ToMatrix3()
+	{
+		Matrix3 ret;
+		ret.mat[0][0] = 2 * (w * w + x * x) - 1;
+		ret.mat[0][1] = 2 * (x * y - w * z);
+		ret.mat[0][2] = 2 * (x * z + w * y);
+		ret.mat[1][0] = 2 * (x * y + w * z);
+		ret.mat[1][1] = 2 * (w * w + y * y) - 1;
+		ret.mat[1][2] = 2 * (y * z - w * x);
+		ret.mat[2][0] = 2 * (x * z - w * y);
+		ret.mat[2][1] = 2 * (y * z + w * x);
+		ret.mat[2][2] = 2 * (w * w + z * z) - 1;
+		return ret;
+	}
+
+	static Quaternion FromEulerAngles(Vector3 euler)
+	{
+		Quaternion q{ 1,0,0,0 };
+		float yaw = euler.y;
+		float pitch = euler.z;
+		float roll = euler.x;
+
+		double cy = cos(yaw * 0.5);
+		double sy = sin(yaw * 0.5);
+		double cp = cos(pitch * 0.5);
+		double sp = sin(pitch * 0.5);
+		double cr = cos(roll * 0.5);
+		double sr = sin(roll * 0.5);
+
+		q.w = cr * cp * cy + sr * sp * sy;
+		q.x = sr * cp * cy - cr * sp * sy;
+		q.y = cr * sp * cy + sr * cp * sy;
+		q.z = cr * cp * sy - sr * sp * cy;
+		return q;
+	}
+
+	void normalize()
+	{
+		float mag = sqrtf(w * w + x * x + y * y + z * z);
+		w /= mag;
+		x /= mag;
+		y /= mag;
+		z /= mag;
+	}
+
 };
 
+
+inline Quaternion operator*(Quaternion a, Quaternion b)
+{
+	Quaternion ret;
+	ret.w = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z;
+	ret.x = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y;
+	ret.y = a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x;
+	ret.z = a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w;
+	return ret;
+}
+
+inline Quaternion operator+(Quaternion a, Quaternion b)
+{
+	Quaternion ret;
+	ret.w = a.w + b.w;
+	ret.x = a.x + b.x;
+	ret.y = a.y + b.y;
+	ret.z = a.z + b.z;
+	return ret;
+}
+
+inline Quaternion operator*(Quaternion a, float f)
+{
+	Quaternion ret{ 0,0,0,0 };
+	ret.w = a.w * f;
+	ret.x = a.x * f;
+	ret.y = a.y * f;
+	ret.z = a.z * f;
+	return ret;
+}
+
+inline Quaternion operator*(float f, Quaternion a)
+{
+	Quaternion ret{ 0,0,0,0 };
+	ret.w = a.w * f;
+	ret.x = a.x * f;
+	ret.y = a.y * f;
+	ret.z = a.z * f;
+	return ret;
+}
 
 
 inline Vector2 operator+(Vector2& a, Vector2& b)
@@ -1236,6 +1347,11 @@ inline Vector4 operator-=(Vector4& a, Vector4 b)
 inline Vector3 operator-(Vector3 vec)
 {
 	return { -vec.x, -vec.y, -vec.z };
+}
+
+inline Vector3 operator*(float& a, Vector3& b)
+{
+	return Vector3(a * b.x, a * b.y, a * b.z);
 }
 
 inline float VectorDot(Vector2 a, Vector2 b)

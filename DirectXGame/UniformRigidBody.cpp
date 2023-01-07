@@ -9,15 +9,15 @@ UniformRigidBody::UniformRigidBody(float _mass, float _inertia)
     massInv = 1.0f/mass;
     inertiaInv = 1.0f/inertia;
     position = Vector3();
-    rotation = Quaternion(Vector3(0,0,0));
+    rotation = Quaternion::FromEulerAngles(Vector3(0,0,0));
     linearMomentum = Vector3();
     angularMomentum = Vector3();
     velocity = Vector3();
     angularVelocity = Vector3();
     gravitionalForce = Vector3();
     torque = Vector3();
-    rotation = VectorNormalize(rotation);
-    rotationMatrix = glm::toMat3(rotation);
+    rotation.normalize();
+    rotationMatrix = rotation.ToMatrix3();
 }
 
 UniformRigidBody::UniformRigidBody(const UniformRigidBody& other)
@@ -34,8 +34,8 @@ UniformRigidBody::UniformRigidBody(const UniformRigidBody& other)
     angularVelocity = other.angularVelocity;
     gravitionalForce = other.gravitionalForce;
     torque = other.torque;
-    rotation = VectorNormalize(rotation);
-    rotationMatrix = glm::toMat3(rotation);
+    rotation.normalize();
+    rotationMatrix = rotation.ToMatrix3();
 }
 
 UniformRigidBody& UniformRigidBody::operator= (const UniformRigidBody& other)
@@ -52,8 +52,8 @@ UniformRigidBody& UniformRigidBody::operator= (const UniformRigidBody& other)
     angularVelocity = other.angularVelocity;
     gravitionalForce = other.gravitionalForce;
     torque = other.torque;
-    rotation = VectorNormalize(rotation);
-    rotationMatrix = glm::toMat3(rotation);
+    rotation.normalize();
+    rotationMatrix = rotation.ToMatrix3();
     return *this;
 }
 
@@ -62,15 +62,15 @@ UniformRigidBody::UniformRigidBody(): mass(1.0f), inertia(1.0f)
     massInv = 1.0f/mass;
     inertiaInv = 1.0f/inertia;
     position = Vector3();
-    rotation = Quaternion(Vector3(0,0,0));
+    rotation = Quaternion::FromEulerAngles(Vector3(0,0,0));
     linearMomentum = Vector3();
     angularMomentum = Vector3();
     velocity = Vector3();
     angularVelocity = Vector3();
     gravitionalForce = Vector3();
     torque = Vector3();
-    rotation = VectorNormalize(rotation);
-    rotationMatrix = rotation.;
+    rotation.normalize();
+    rotationMatrix = rotation.ToMatrix3();
 }
 
 
@@ -110,29 +110,31 @@ void UniformRigidBody::setVelocity(const Vector3& velocity)
 
 void UniformRigidBody::setAngularVelocity(const Vector3& angularVelocity)
 {
-    angularMomentum = inertia*angularVelocity;
+    angularMomentum = angularVelocity*inertia;
     this->angularVelocity = angularVelocity;
 }
 
 Vector3 UniformRigidBody::getLocalXAxis()
 {
-    return Vector3(rotationMatrix[0]);
+    return Vector3(rotationMatrix.mat[0]);
 }
 
 Vector3 UniformRigidBody::getLocalYAxis()
 {
-    return Vector3(rotationMatrix[1]);
+    return Vector3(rotationMatrix.mat[1]);
 }
 
 Vector3 UniformRigidBody::getLocalZAxis()
 {
-    return Vector3(rotationMatrix[2]);
+    return Vector3(rotationMatrix.mat[2]);
 }
 
 Vector3 UniformRigidBody::peekNextPosition(float dt)
 {
-    Vector3 tempMomentum = linearMomentum+gravitionalForce*dt;
-    return position + massInv*tempMomentum*dt;
+    Vector3 temp = gravitionalForce * dt;
+    Vector3 tempMomentum = linearMomentum+temp;
+    temp = massInv * tempMomentum * dt;
+    return position + temp;
 }
 void UniformRigidBody::stepQuantities(float dt)
 {
@@ -158,17 +160,18 @@ void UniformRigidBody::stepQuantities(float dt)
             linearMomentum += gravitionalForce*dt;
         angularVelocity = inertiaInv*angularMomentum;
         velocity = massInv*linearMomentum;
-        rotation+= dt*0.5f*Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z)*rotation;
-        rotation = VectorNormalize(rotation);
-        rotationMatrix = rotation.;
+        Quaternion angularVelQuat(0.0f, angularVelocity.x, angularVelocity.y, angularVelocity.z);
+        rotation = rotation + (dt*0.5f) * angularVelQuat *rotation;
+        rotation.normalize();
+        rotationMatrix = rotation.ToMatrix3();
         position+=dt*velocity;
     }
     else
     {
         angularMomentum = Vector3();
         linearMomentum = Vector3();
-        rotation = VectorNormalize(rotation);
-        rotationMatrix = glm::toMat3(rotation);
+        rotation.normalize();
+        rotationMatrix = rotation.ToMatrix3();
     }
 }
 
