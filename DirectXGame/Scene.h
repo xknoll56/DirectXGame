@@ -491,7 +491,7 @@ public:
 		sphereBody = UniformRigidBody(5.0f, 1.0f);
 		sphereCollider = SphereCollider({ 1.0f });
 		sphereBody.position = { 0, 5.0f, 0 };
-		boxBody.rotation = Quaternion::FromEulerAngles({ -0.00f, 0.0f, 0.45 });
+		boxBody.rotation = Quaternion::FromEulerAngles({ -0.45f, 0.45f, -0.45 });
 
 		boxCollider.rb = &boxBody;
 		sphereCollider.rb = &sphereBody;
@@ -509,8 +509,9 @@ public:
 
 		Scene::moveCamera(dt);
 		Scene::updateLights(blinnPhongShader, { 1.0, 0,0,0 }, { 1,0,0,1 });
-		world.stepWorld(dt);
+		world.stepWorld(dt*0.05f);
 		drawBox(boxCollider.rb->position, boxCollider.scale, boxCollider.rb->rotation, { 1, 1, 1, 0 });
 		drawSphere(sphereCollider.rb->position, 0.5f*sphereCollider.scale, sphereCollider.rb->rotation, { 1,1,1,1 });
+		drawLine(boxCollider.rb->position, sphereCollider.rb->position, { 1,0,0,0 });
 	}
 };

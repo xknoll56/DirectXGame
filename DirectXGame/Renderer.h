@@ -254,9 +254,8 @@ public:
 
     void update(float dt)
     {
-
         setStates();
-        
+
         demoScene.update(dt);
         d3d11SwapChain->Present(0, 0);
     }

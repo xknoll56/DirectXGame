@@ -1,11 +1,11 @@
 ﻿  Main.cpp
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp(3,1): warning C4005: 'UNICODE': macro redefinition
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Main.cpp : message : see previous definition of 'UNICODE'
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1256,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1257,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1258,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1259,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1260,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1620,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1625,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(404,1): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(417,1): warning C4305: '-=': truncation from 'double' to 'float'
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(419,1): warning C4305: '+=': truncation from 'double' to 'float'

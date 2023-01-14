@@ -1212,7 +1212,6 @@ struct Quaternion
 	Matrix4 ToMatrix4()
 	{
 		Matrix4 ret(1.0f);
-		//x = -x;
 		ret.mat[0][0] = 2 * (w * w + x * x) - 1;
 		ret.mat[0][1] = 2 * (x * y - w * z);
 		ret.mat[0][2] = 2 * (x * z + w * y);
@@ -1445,6 +1444,12 @@ inline float VectorLength(Vector3 vec)
 {
 	return  sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 }
+
+inline float VectorLength3(Vector3 vec)
+{
+	return  vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
+}
+
 
 inline float VectorLength(Vector4 vec)
 {
