@@ -31,12 +31,11 @@ struct Camera
 };
 
 Camera camera;
-#include "UniformRigidBody.h"
-#include "Collider.h"
-#include "PhysicsWorld.h"
+
 #include "Scene.h"
 #include "Renderer.h"
 #include "Drawable.h"
+
 
 static bool global_windowDidResize = false;
 
@@ -152,7 +151,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
     return result;
 }
 
-void intializeWindow;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int /*nShowCmd*/)
 {

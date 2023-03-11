@@ -139,26 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ObjLoading.h" />
-    <ClInclude Include="PhysicsWorld.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
-    <ClInclude Include="UniformRigidBody.h" />
-    <ClInclude Include="VectorMath.h" />
     <ClInclude Include="VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ObjLoading.cpp" />
-    <ClCompile Include="PhysicsWorld.cpp" />
-    <ClCompile Include="UniformRigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BlinnPhong.hlsl">
