@@ -487,6 +487,7 @@ public:
 
 		Scene::moveCamera(dt);
 		Scene::updateLights(blinnPhongShader, { 1.0, 1.0,0,0 }, { 1,0,0,1 });
+		int a;
 
 		drawBox({ 0,0,0 }, { 1,1,1 }, { 0,0,0 }, { 1,1,1,1 });
 	}
