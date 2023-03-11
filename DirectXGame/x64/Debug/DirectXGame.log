@@ -9,10 +9,6 @@ C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1625,15): 
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(404,1): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(417,1): warning C4305: '-=': truncation from 'double' to 'float'
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\Scene.h(419,1): warning C4305: '+=': truncation from 'double' to 'float'
-  ObjLoading.cpp
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(317,42): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\ObjLoading.cpp(318,40): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-  Generating Code...
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(962): warning C4715: 'Vector4::operator[]': not all control paths return a value
 C:\Users\Xavier\Documents\GitHub\DirectXGame\DirectXGame\VectorMath.h(1177): warning C4715: 'Matrix4::row': not all control paths return a value
   DirectXGame.vcxproj -> C:\Users\Xavier\Documents\GitHub\DirectXGame\x64\Debug\DirectXGame.exe
